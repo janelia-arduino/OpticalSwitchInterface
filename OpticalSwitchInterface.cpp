@@ -15,15 +15,6 @@ void OpticalSwitchInterface::setup()
   // Parent Setup
   ModularDeviceBase::setup();
 
-  // Encoders Setup
-  for (size_t encoder_index=0; encoder_index<constants::ENCODER_COUNT; ++encoder_index)
-  {
-    encoders_[encoder_index].setup(constants::encoder_a_pins[encoder_index],
-                                   constants::encoder_b_pins[encoder_index]);
-  }
-  encoders_[0].attachPositiveFunctor(makeFunctor((Functor1<int32_t> *)0,*this,&OpticalSwitchInterface::positiveEncoder0Handler));
-  encoders_[0].attachNegativeFunctor(makeFunctor((Functor1<int32_t> *)0,*this,&OpticalSwitchInterface::negativeEncoder0Handler));
-
   // Pin Setup
   pinMode(constants::enable_pin,OUTPUT);
   enableAllOutputs();
@@ -34,14 +25,19 @@ void OpticalSwitchInterface::setup()
     digitalWrite(constants::output_pins[output_index],LOW);
   }
 
-  // Interrupts
-
   // Set Device ID
   modular_server_.setDeviceName(constants::device_name);
 
   // Add Hardware
   modular_server_.addHardware(constants::hardware_info,
                               interrupts_);
+
+  // Interrupts
+  for (size_t interrupt_index=0; interrupt_index<constants::INTERRUPT_COUNT_MAX; ++interrupt_index)
+  {
+    modular_server_.createInterrupt(*constants::switch_interrupt_name_ptrs[interrupt_index],
+                                    constants::switch_pins[interrupt_index]);
+  }
 
   // Add Firmware
   modular_server_.addFirmware(constants::firmware_info,
@@ -52,11 +48,6 @@ void OpticalSwitchInterface::setup()
   // Properties
 
   // Parameters
-  modular_server::Parameter & encoder_index_parameter = modular_server_.createParameter(constants::encoder_index_parameter_name);
-  encoder_index_parameter.setRange(0,constants::ENCODER_COUNT-1);
-
-  modular_server::Parameter & position_parameter = modular_server_.createParameter(constants::position_parameter_name);
-  position_parameter.setTypeLong();
 
   // Functions
   modular_server::Function & enable_all_outputs_function = modular_server_.createFunction(constants::enable_all_outputs_function_name);
@@ -69,16 +60,22 @@ void OpticalSwitchInterface::setup()
   outputs_enabled_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::outputsEnabledHandler));
   outputs_enabled_function.setReturnTypeBool();
 
-  modular_server::Function & get_positions_function = modular_server_.createFunction(constants::get_positions_function_name);
-  get_positions_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::getPositionsHandler));
-  get_positions_function.setReturnTypeArray();
-
-  modular_server::Function & set_position_function = modular_server_.createFunction(constants::set_position_function_name);
-  set_position_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::setPositionHandler));
-  set_position_function.addParameter(encoder_index_parameter);
-  set_position_function.addParameter(position_parameter);
-
   // Callbacks
+  modular_server::Callback & output_0_callback = modular_server_.createCallback(constants::output_0_callback_name);
+  output_0_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output0Handler));
+  output_0_callback.attachTo(*(constants::switch_interrupt_name_ptrs[0]),modular_server::interrupt::mode_change);
+
+  modular_server::Callback & output_1_callback = modular_server_.createCallback(constants::output_1_callback_name);
+  output_1_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output1Handler));
+  output_1_callback.attachTo(*(constants::switch_interrupt_name_ptrs[1]),modular_server::interrupt::mode_change);
+
+  modular_server::Callback & output_2_callback = modular_server_.createCallback(constants::output_2_callback_name);
+  output_2_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output2Handler));
+  output_2_callback.attachTo(*(constants::switch_interrupt_name_ptrs[2]),modular_server::interrupt::mode_change);
+
+  modular_server::Callback & output_3_callback = modular_server_.createCallback(constants::output_3_callback_name);
+  output_3_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output3Handler));
+  output_3_callback.attachTo(*(constants::switch_interrupt_name_ptrs[3]),modular_server::interrupt::mode_change);
 
 }
 
@@ -99,20 +96,6 @@ bool OpticalSwitchInterface::outputsEnabled()
   return enabled_;
 }
 
-long OpticalSwitchInterface::getPosition(const size_t encoder_index)
-{
-  noInterrupts();
-  long position = encoders_[encoder_index].read();
-  interrupts();
-  return position;
-}
-
-void OpticalSwitchInterface::setPosition(const size_t encoder_index,
-                                         const long position)
-{
-  encoders_[encoder_index].write(position);
-}
-
 // Handlers must be non-blocking (avoid 'delay')
 //
 // modular_server_.parameter(parameter_name).getValue(value) value type must be either:
@@ -130,22 +113,6 @@ void OpticalSwitchInterface::setPosition(const size_t encoder_index,
 // modular_server_.property(property_name).getElementValue(value) value type must match the property array element default type
 // modular_server_.property(property_name).setElementValue(value) value type must match the property array element default type
 
-void OpticalSwitchInterface::positiveEncoder0Handler(const int32_t position)
-{
-  digitalWrite(constants::output_pins[0],
-               !digitalRead(constants::output_pins[0]));
-  digitalWrite(constants::output_pins[1],
-               HIGH);
-}
-
-void OpticalSwitchInterface::negativeEncoder0Handler(const int32_t position)
-{
-  digitalWrite(constants::output_pins[0],
-               !digitalRead(constants::output_pins[0]));
-  digitalWrite(constants::output_pins[1],
-               LOW);
-}
-
 void OpticalSwitchInterface::enableAllOutputsHandler()
 {
   enableAllOutputs();
@@ -162,31 +129,67 @@ void OpticalSwitchInterface::outputsEnabledHandler()
   modular_server_.response().returnResult(all_enabled);
 }
 
-void OpticalSwitchInterface::getPositionsHandler()
+void OpticalSwitchInterface::output0Handler(modular_server::Interrupt * interrupt_ptr)
 {
-  modular_server_.response().writeResultKey();
-
-  modular_server_.response().beginArray();
-
-  long position;
-  for (size_t encoder_index=0; encoder_index<constants::ENCODER_COUNT; ++encoder_index)
+  if (interrupt_ptr)
   {
-    position = getPosition(encoder_index);
-    modular_server_.response().write(position);
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+    if (pin_value == HIGH)
+    {
+      digitalWrite(constants::output_pins[0],HIGH);
+    }
+    else
+    {
+      digitalWrite(constants::output_pins[0],LOW);
+    }
   }
-
-  modular_server_.response().endArray();
-
 }
 
-void OpticalSwitchInterface::setPositionHandler()
+void OpticalSwitchInterface::output1Handler(modular_server::Interrupt * interrupt_ptr)
 {
-  long encoder_index;
-  modular_server_.parameter(constants::encoder_index_parameter_name).getValue(encoder_index);
+  if (interrupt_ptr)
+  {
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+    if (pin_value == HIGH)
+    {
+      digitalWrite(constants::output_pins[1],HIGH);
+    }
+    else
+    {
+      digitalWrite(constants::output_pins[1],LOW);
+    }
+  }
+}
 
-  long position;
-  modular_server_.parameter(constants::position_parameter_name).getValue(position);
+void OpticalSwitchInterface::output2Handler(modular_server::Interrupt * interrupt_ptr)
+{
+  if (interrupt_ptr)
+  {
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+    if (pin_value == HIGH)
+    {
+      digitalWrite(constants::output_pins[2],HIGH);
+    }
+    else
+    {
+      digitalWrite(constants::output_pins[2],LOW);
+    }
+  }
+}
 
-  setPosition(encoder_index,position);
+void OpticalSwitchInterface::output3Handler(modular_server::Interrupt * interrupt_ptr)
+{
+  if (interrupt_ptr)
+  {
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+    if (pin_value == HIGH)
+    {
+      digitalWrite(constants::output_pins[3],HIGH);
+    }
+    else
+    {
+      digitalWrite(constants::output_pins[3],LOW);
+    }
+  }
 }
 

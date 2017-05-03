@@ -34,16 +34,24 @@ const size_t output_pins[OUTPUT_COUNT] =
 
 // Interrupts
 CONSTANT_STRING(switch_0_interrupt_name,"switch_0");
-const size_t switch_0_pin = 3;
-
 CONSTANT_STRING(switch_1_interrupt_name,"switch_1");
-const size_t switch_1_pin = 4;
-
 CONSTANT_STRING(switch_2_interrupt_name,"switch_2");
-const size_t switch_2_pin = 5;
-
 CONSTANT_STRING(switch_3_interrupt_name,"switch_3");
-const size_t switch_3_pin = 6;
+ConstantString * switch_interrupt_name_ptrs[INTERRUPT_COUNT_MAX] =
+  {
+    &switch_0_interrupt_name,
+    &switch_1_interrupt_name,
+    &switch_2_interrupt_name,
+    &switch_3_interrupt_name,
+  };
+
+const size_t switch_pins[INTERRUPT_COUNT_MAX] =
+  {
+    3,
+    4,
+    5,
+    6,
+  };
 
 // Units
 

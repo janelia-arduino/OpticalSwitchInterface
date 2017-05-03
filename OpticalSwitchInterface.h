@@ -39,10 +39,6 @@ public:
   void disableAllOutputs();
   bool outputsEnabled();
 
-  long getPosition(const size_t encoder_index);
-  void setPosition(const size_t encoder_index,
-                   const long position);
-
 private:
   modular_server::Interrupt interrupts_[optical_switch_interface::constants::INTERRUPT_COUNT_MAX];
 
@@ -52,16 +48,15 @@ private:
   modular_server::Callback callbacks_[optical_switch_interface::constants::CALLBACK_COUNT_MAX];
 
   bool enabled_;
-  EncoderFunctors encoders_[optical_switch_interface::constants::ENCODER_COUNT];
 
   // Handlers
-  void positiveEncoder0Handler(const int32_t position);
-  void negativeEncoder0Handler(const int32_t position);
   void enableAllOutputsHandler();
   void disableAllOutputsHandler();
   void outputsEnabledHandler();
-  void getPositionsHandler();
-  void setPositionHandler();
+  void output0Handler(modular_server::Interrupt * interrupt_ptr);
+  void output1Handler(modular_server::Interrupt * interrupt_ptr);
+  void output2Handler(modular_server::Interrupt * interrupt_ptr);
+  void output3Handler(modular_server::Interrupt * interrupt_ptr);
 
 };
 

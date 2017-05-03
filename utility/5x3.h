@@ -25,16 +25,12 @@ extern const size_t output_pins[OUTPUT_COUNT];
 
 // Interrupts
 extern ConstantString switch_0_interrupt_name;
-extern const size_t switch_0_pin;
-
 extern ConstantString switch_1_interrupt_name;
-extern const size_t switch_1_pin;
-
 extern ConstantString switch_2_interrupt_name;
-extern const size_t switch_2_pin;
-
 extern ConstantString switch_3_interrupt_name;
-extern const size_t switch_3_pin;
+extern ConstantString * switch_interrupt_name_ptrs[INTERRUPT_COUNT_MAX];
+
+extern const size_t switch_pins[INTERRUPT_COUNT_MAX];
 
 // Units
 
