@@ -56,6 +56,13 @@ const size_t switch_pins[INTERRUPT_COUNT_MAX] =
 // Units
 
 // Properties
+const bool inverted_default[OUTPUT_COUNT] =
+  {
+    false,
+    false,
+    false,
+    false,
+  };
 
 // Parameters
 

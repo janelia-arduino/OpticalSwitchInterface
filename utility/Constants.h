@@ -39,6 +39,7 @@ extern const size_t enable_pin;
 
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
+extern ConstantString inverted_property_name;
 
 // Parameters
 

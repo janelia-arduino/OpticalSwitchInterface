@@ -46,6 +46,7 @@ void OpticalSwitchInterface::setup()
                               functions_,
                               callbacks_);
   // Properties
+  modular_server::Property & inverted_property = modular_server_.createProperty(constants::inverted_property_name,constants::inverted_default);
 
   // Parameters
 
@@ -110,8 +111,8 @@ bool OpticalSwitchInterface::outputsEnabled()
 //
 // modular_server_.property(property_name).getValue(value) value type must match the property default type
 // modular_server_.property(property_name).setValue(value) value type must match the property default type
-// modular_server_.property(property_name).getElementValue(value) value type must match the property array element default type
-// modular_server_.property(property_name).setElementValue(value) value type must match the property array element default type
+// modular_server_.property(property_name).getElementValue(element_index,value) value type must match the property array element default type
+// modular_server_.property(property_name).setElementValue(element_index,value) value type must match the property array element default type
 
 void OpticalSwitchInterface::enableAllOutputsHandler()
 {
@@ -133,7 +134,13 @@ void OpticalSwitchInterface::output0Handler(modular_server::Interrupt * interrup
 {
   if (interrupt_ptr)
   {
+    size_t output_index = 0;
+
+    bool inverted;
+    modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
+
     int pin_value = digitalRead(interrupt_ptr->getPin());
+    
     if (pin_value == HIGH)
     {
       digitalWrite(constants::output_pins[0],HIGH);
@@ -141,54 +148,6 @@ void OpticalSwitchInterface::output0Handler(modular_server::Interrupt * interrup
     else
     {
       digitalWrite(constants::output_pins[0],LOW);
-    }
-  }
-}
-
-void OpticalSwitchInterface::output1Handler(modular_server::Interrupt * interrupt_ptr)
-{
-  if (interrupt_ptr)
-  {
-    int pin_value = digitalRead(interrupt_ptr->getPin());
-    if (pin_value == HIGH)
-    {
-      digitalWrite(constants::output_pins[1],HIGH);
-    }
-    else
-    {
-      digitalWrite(constants::output_pins[1],LOW);
-    }
-  }
-}
-
-void OpticalSwitchInterface::output2Handler(modular_server::Interrupt * interrupt_ptr)
-{
-  if (interrupt_ptr)
-  {
-    int pin_value = digitalRead(interrupt_ptr->getPin());
-    if (pin_value == HIGH)
-    {
-      digitalWrite(constants::output_pins[2],HIGH);
-    }
-    else
-    {
-      digitalWrite(constants::output_pins[2],LOW);
-    }
-  }
-}
-
-void OpticalSwitchInterface::output3Handler(modular_server::Interrupt * interrupt_ptr)
-{
-  if (interrupt_ptr)
-  {
-    int pin_value = digitalRead(interrupt_ptr->getPin());
-    if (pin_value == HIGH)
-    {
-      digitalWrite(constants::output_pins[3],HIGH);
-    }
-    else
-    {
-      digitalWrite(constants::output_pins[3],LOW);
     }
   }
 }

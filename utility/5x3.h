@@ -36,6 +36,7 @@ extern const size_t switch_pins[INTERRUPT_COUNT_MAX];
 
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
+extern const bool inverted_default[OUTPUT_COUNT];
 
 // Parameters
 

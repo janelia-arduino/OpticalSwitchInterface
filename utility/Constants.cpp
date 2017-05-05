@@ -31,6 +31,7 @@ CONSTANT_STRING(hardware_name,"optical_switch_interface");
 // Units
 
 // Properties
+CONSTANT_STRING(inverted_property_name,"inverted");
 
 // Parameters
 
