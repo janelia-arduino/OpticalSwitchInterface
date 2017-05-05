@@ -140,15 +140,89 @@ void OpticalSwitchInterface::output0Handler(modular_server::Interrupt * interrup
     modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
 
     int pin_value = digitalRead(interrupt_ptr->getPin());
-    
-    if (pin_value == HIGH)
+
+    if (!inverted)
     {
-      digitalWrite(constants::output_pins[0],HIGH);
+      pin_value = ((pin_value == HIGH) ? HIGH : LOW);
     }
     else
     {
-      digitalWrite(constants::output_pins[0],LOW);
+      pin_value = ((pin_value == HIGH) ? LOW : HIGH);
     }
+
+    digitalWrite(constants::output_pins[output_index],pin_value);
+  }
+}
+
+void OpticalSwitchInterface::output1Handler(modular_server::Interrupt * interrupt_ptr)
+{
+  if (interrupt_ptr)
+  {
+    size_t output_index = 1;
+
+    bool inverted;
+    modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
+
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+
+    if (!inverted)
+    {
+      pin_value = ((pin_value == HIGH) ? HIGH : LOW);
+    }
+    else
+    {
+      pin_value = ((pin_value == HIGH) ? LOW : HIGH);
+    }
+
+    digitalWrite(constants::output_pins[output_index],pin_value);
+  }
+}
+
+void OpticalSwitchInterface::output2Handler(modular_server::Interrupt * interrupt_ptr)
+{
+  if (interrupt_ptr)
+  {
+    size_t output_index = 2;
+
+    bool inverted;
+    modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
+
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+
+    if (!inverted)
+    {
+      pin_value = ((pin_value == HIGH) ? HIGH : LOW);
+    }
+    else
+    {
+      pin_value = ((pin_value == HIGH) ? LOW : HIGH);
+    }
+
+    digitalWrite(constants::output_pins[output_index],pin_value);
+  }
+}
+
+void OpticalSwitchInterface::output3Handler(modular_server::Interrupt * interrupt_ptr)
+{
+  if (interrupt_ptr)
+  {
+    size_t output_index = 3;
+
+    bool inverted;
+    modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
+
+    int pin_value = digitalRead(interrupt_ptr->getPin());
+
+    if (!inverted)
+    {
+      pin_value = ((pin_value == HIGH) ? HIGH : LOW);
+    }
+    else
+    {
+      pin_value = ((pin_value == HIGH) ? LOW : HIGH);
+    }
+
+    digitalWrite(constants::output_pins[output_index],pin_value);
   }
 }
 
