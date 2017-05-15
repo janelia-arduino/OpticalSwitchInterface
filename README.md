@@ -58,43 +58,103 @@ License:
     "functions":[
       {
         "name":"enableAllOutputs",
-        "parameters":[],
-        "result_type":null
+        "parameters":[]
       },
       {
         "name":"disableAllOutputs",
-        "parameters":[],
-        "result_type":null
+        "parameters":[]
       },
       {
         "name":"outputsEnabled",
         "parameters":[],
-        "result_type":"bool"
+        "result_info":{
+          "type":"bool"
+        }
       }
     ],
     "parameters":[],
     "properties":[
       {
         "name":"inverted",
-        "type":"array"
+        "type":"array",
+        "array_element_type":"bool",
+        "functions":[
+          "getValue",
+          "setValue",
+          "getDefaultValue",
+          "setValueToDefault",
+          "getElementValue",
+          "setElementValue",
+          "getDefaultElementValue",
+          "setElementValueToDefault",
+          "setAllElementValues",
+          "getArrayLength",
+          "setArrayLength"
+        ],
+        "parameters":[
+          "value",
+          "element_index",
+          "element_value",
+          "array_length"
+        ]
       }
     ],
     "callbacks":[
       {
         "name":"output0",
-        "properties":[]
+        "properties":[],
+        "functions":[
+          "trigger",
+          "attachTo",
+          "detachFrom",
+          "detachFromAll"
+        ],
+        "parameters":[
+          "interrupt",
+          "mode"
+        ]
       },
       {
         "name":"output1",
-        "properties":[]
+        "properties":[],
+        "functions":[
+          "trigger",
+          "attachTo",
+          "detachFrom",
+          "detachFromAll"
+        ],
+        "parameters":[
+          "interrupt",
+          "mode"
+        ]
       },
       {
         "name":"output2",
-        "properties":[]
+        "properties":[],
+        "functions":[
+          "trigger",
+          "attachTo",
+          "detachFrom",
+          "detachFromAll"
+        ],
+        "parameters":[
+          "interrupt",
+          "mode"
+        ]
       },
       {
         "name":"output3",
-        "properties":[]
+        "properties":[],
+        "functions":[
+          "trigger",
+          "attachTo",
+          "detachFrom",
+          "detachFromAll"
+        ],
+        "parameters":[
+          "interrupt",
+          "mode"
+        ]
       }
     ]
   }
