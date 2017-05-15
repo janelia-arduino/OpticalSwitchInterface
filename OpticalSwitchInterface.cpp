@@ -59,7 +59,7 @@ void OpticalSwitchInterface::setup()
 
   modular_server::Function & outputs_enabled_function = modular_server_.createFunction(constants::outputs_enabled_function_name);
   outputs_enabled_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::outputsEnabledHandler));
-  outputs_enabled_function.setReturnTypeBool();
+  outputs_enabled_function.setResultTypeBool();
 
   // Callbacks
   modular_server::Callback & output_0_callback = modular_server_.createCallback(constants::output_0_callback_name);

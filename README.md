@@ -48,6 +48,59 @@ License:
 }
 ```
 
+## API Verbose
+
+```json
+{
+  "id":"getApiVerbose",
+  "result":{
+    "firmware":["OpticalSwitchInterface"],
+    "functions":[
+      {
+        "name":"enableAllOutputs",
+        "parameters":[],
+        "result_type":null
+      },
+      {
+        "name":"disableAllOutputs",
+        "parameters":[],
+        "result_type":null
+      },
+      {
+        "name":"outputsEnabled",
+        "parameters":[],
+        "result_type":"bool"
+      }
+    ],
+    "parameters":[],
+    "properties":[
+      {
+        "name":"inverted",
+        "type":"array"
+      }
+    ],
+    "callbacks":[
+      {
+        "name":"output0",
+        "properties":[]
+      },
+      {
+        "name":"output1",
+        "properties":[]
+      },
+      {
+        "name":"output2",
+        "properties":[]
+      },
+      {
+        "name":"output3",
+        "properties":[]
+      }
+    ]
+  }
+}
+```
+
 ## More Detailed Modular Device Information
 
 [modular-devices](https://github.com/janelia-modular-devices/modular-devices)
