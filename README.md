@@ -32,7 +32,9 @@ License:
     "functions":[
       "enableAllOutputs",
       "disableAllOutputs",
-      "outputsEnabled"
+      "outputsEnabled",
+      "getSwitchInfo",
+      "getOutputInfo"
     ],
     "parameters":[],
     "properties":[
@@ -69,6 +71,22 @@ License:
         "parameters":[],
         "result_info":{
           "type":"bool"
+        }
+      },
+      {
+        "name":"getSwitchInfo",
+        "parameters":[],
+        "result_info":{
+          "type":"array",
+          "array_element_type":"object"
+        }
+      },
+      {
+        "name":"getOutputInfo",
+        "parameters":[],
+        "result_info":{
+          "type":"array",
+          "array_element_type":"object"
         }
       }
     ],
