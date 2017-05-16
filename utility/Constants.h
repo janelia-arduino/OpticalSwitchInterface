@@ -20,7 +20,7 @@ namespace constants
 //MAX values must be >= 1, >= created/copied count, < RAM limit
 enum{PROPERTY_COUNT_MAX=1};
 enum{PARAMETER_COUNT_MAX=1};
-enum{FUNCTION_COUNT_MAX=3};
+enum{FUNCTION_COUNT_MAX=5};
 enum{CALLBACK_COUNT_MAX=4};
 
 extern ConstantString device_name;
@@ -32,6 +32,11 @@ extern ConstantString hardware_name;
 extern const modular_server::HardwareInfo hardware_info;
 
 extern const size_t enable_pin;
+
+extern ConstantString pin_string;
+extern ConstantString state_string;
+extern ConstantString high_string;
+extern ConstantString low_string;
 
 // Interrupts
 
@@ -47,6 +52,8 @@ extern ConstantString inverted_property_name;
 extern ConstantString enable_all_outputs_function_name;
 extern ConstantString disable_all_outputs_function_name;
 extern ConstantString outputs_enabled_function_name;
+extern ConstantString get_switch_info_function_name;
+extern ConstantString get_output_info_function_name;
 
 // Callbacks
 extern ConstantString output_0_callback_name;

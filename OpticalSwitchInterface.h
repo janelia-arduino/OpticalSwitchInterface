@@ -41,6 +41,9 @@ public:
   void disableAllOutputs();
   bool outputsEnabled();
 
+  int switchRead(const size_t switch_index);
+  int outputRead(const size_t output_index);
+
 private:
   modular_server::Interrupt interrupts_[optical_switch_interface::constants::INTERRUPT_COUNT_MAX];
 
@@ -55,6 +58,8 @@ private:
   void enableAllOutputsHandler();
   void disableAllOutputsHandler();
   void outputsEnabledHandler();
+  void getSwitchInfoHandler();
+  void getOutputInfoHandler();
   void invertedElementHandler(const size_t element_index);
   void output0Handler(modular_server::Interrupt * interrupt_ptr);
   void output1Handler(modular_server::Interrupt * interrupt_ptr);

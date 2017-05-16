@@ -62,6 +62,16 @@ void OpticalSwitchInterface::setup()
   outputs_enabled_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::outputsEnabledHandler));
   outputs_enabled_function.setResultTypeBool();
 
+  modular_server::Function & get_switch_info_function = modular_server_.createFunction(constants::get_switch_info_function_name);
+  get_switch_info_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::getSwitchInfoHandler));
+  get_switch_info_function.setResultTypeArray();
+  get_switch_info_function.setResultTypeObject();
+
+  modular_server::Function & get_output_info_function = modular_server_.createFunction(constants::get_output_info_function_name);
+  get_output_info_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&OpticalSwitchInterface::getOutputInfoHandler));
+  get_output_info_function.setResultTypeArray();
+  get_output_info_function.setResultTypeObject();
+
   // Callbacks
   modular_server::Callback & output_0_callback = modular_server_.createCallback(constants::output_0_callback_name);
   output_0_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output0Handler));
@@ -78,6 +88,11 @@ void OpticalSwitchInterface::setup()
   modular_server::Callback & output_3_callback = modular_server_.createCallback(constants::output_3_callback_name);
   output_3_callback.attachFunctor(makeFunctor((Functor1<modular_server::Interrupt *> *)0,*this,&OpticalSwitchInterface::output3Handler));
   output_3_callback.attachTo(*(constants::switch_interrupt_name_ptrs[3]),modular_server::interrupt::mode_change);
+
+  for (size_t output_index=0; output_index<constants::OUTPUT_COUNT; ++output_index)
+  {
+    invertedElementHandler(output_index);
+  }
 
 }
 
@@ -96,6 +111,24 @@ void OpticalSwitchInterface::disableAllOutputs()
 bool OpticalSwitchInterface::outputsEnabled()
 {
   return enabled_;
+}
+
+int OpticalSwitchInterface::switchRead(const size_t switch_index)
+{
+  if (switch_index < constants::INTERRUPT_COUNT_MAX)
+  {
+    return digitalRead(constants::switch_pins[switch_index]);
+  }
+  return LOW;
+}
+
+int OpticalSwitchInterface::outputRead(const size_t output_index)
+{
+  if (output_index < constants::OUTPUT_COUNT)
+  {
+    return digitalRead(constants::output_pins[output_index]);
+  }
+  return LOW;
 }
 
 // Handlers must be non-blocking (avoid 'delay')
@@ -129,6 +162,62 @@ void OpticalSwitchInterface::outputsEnabledHandler()
 {
   bool all_enabled = outputsEnabled();
   modular_server_.response().returnResult(all_enabled);
+}
+
+void OpticalSwitchInterface::getSwitchInfoHandler()
+{
+  modular_server_.response().writeResultKey();
+
+  modular_server_.response().beginArray();
+
+  for (size_t switch_index=0; switch_index<constants::INTERRUPT_COUNT_MAX; ++switch_index)
+  {
+    int state = switchRead(switch_index);
+    modular_server_.response().beginObject();
+
+    // modular_server_.response().write(constants::pin_string,constants::switch_pins[switch_index]);
+
+    if (state == HIGH)
+    {
+      modular_server_.response().write(constants::state_string,constants::high_string);
+    }
+    else
+    {
+      modular_server_.response().write(constants::state_string,constants::low_string);
+    }
+
+    modular_server_.response().endObject();
+  }
+
+  modular_server_.response().endArray();
+}
+
+void OpticalSwitchInterface::getOutputInfoHandler()
+{
+  modular_server_.response().writeResultKey();
+
+  modular_server_.response().beginArray();
+
+  for (size_t output_index=0; output_index<constants::OUTPUT_COUNT; ++output_index)
+  {
+    int state = outputRead(output_index);
+    modular_server_.response().beginObject();
+
+    // modular_server_.response().write(constants::pin_string,constants::output_pins[output_index]);
+
+    if (state == HIGH)
+    {
+      modular_server_.response().write(constants::state_string,constants::high_string);
+    }
+    else
+    {
+      modular_server_.response().write(constants::state_string,constants::low_string);
+    }
+
+    modular_server_.response().endObject();
+  }
+
+  modular_server_.response().endArray();
 }
 
 void OpticalSwitchInterface::invertedElementHandler(const size_t element_index)
