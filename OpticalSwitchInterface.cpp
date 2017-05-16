@@ -47,6 +47,7 @@ void OpticalSwitchInterface::setup()
                               callbacks_);
   // Properties
   modular_server::Property & inverted_property = modular_server_.createProperty(constants::inverted_property_name,constants::inverted_default);
+  inverted_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<const size_t> *)0,*this,&OpticalSwitchInterface::invertedElementHandler));
 
   // Parameters
 
@@ -128,6 +129,30 @@ void OpticalSwitchInterface::outputsEnabledHandler()
 {
   bool all_enabled = outputsEnabled();
   modular_server_.response().returnResult(all_enabled);
+}
+
+void OpticalSwitchInterface::invertedElementHandler(const size_t element_index)
+{
+  if (element_index < constants::INTERRUPT_COUNT_MAX)
+  {
+    modular_server::Interrupt & interrupt = modular_server_.interrupt(*constants::switch_interrupt_name_ptrs[element_index]);
+    if (element_index == 0)
+    {
+      output0Handler(&interrupt);
+    }
+    else if (element_index == 1)
+    {
+      output1Handler(&interrupt);
+    }
+    else if (element_index == 2)
+    {
+      output2Handler(&interrupt);
+    }
+    else if (element_index == 3)
+    {
+      output3Handler(&interrupt);
+    }
+  }
 }
 
 void OpticalSwitchInterface::output0Handler(modular_server::Interrupt * interrupt_ptr)

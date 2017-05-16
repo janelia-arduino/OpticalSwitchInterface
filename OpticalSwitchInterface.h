@@ -55,6 +55,7 @@ private:
   void enableAllOutputsHandler();
   void disableAllOutputsHandler();
   void outputsEnabledHandler();
+  void invertedElementHandler(const size_t element_index);
   void output0Handler(modular_server::Interrupt * interrupt_ptr);
   void output1Handler(modular_server::Interrupt * interrupt_ptr);
   void output2Handler(modular_server::Interrupt * interrupt_ptr);
