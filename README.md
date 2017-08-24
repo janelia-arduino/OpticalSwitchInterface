@@ -22,13 +22,14 @@ License:
 
 [optical_switch_interface](https://github.com/janelia-modular-devices/optical_switch_interface.git)
 
-## API
+## API NAMES
 
 ```json
 {
   "id":"getApi",
   "result":{
     "firmware":["OpticalSwitchInterface"],
+    "verbosity":"NAMES",
     "functions":[
       "enableAllOutputs",
       "disableAllOutputs",
@@ -36,7 +37,6 @@ License:
       "getSwitchInfo",
       "getOutputInfo"
     ],
-    "parameters":[],
     "properties":[
       "inverted"
     ],
@@ -50,9 +50,9 @@ License:
 }
 ```
 
-## API Verbose
+## API GENERAL
 
-[API Verbose](./api.json)
+[API GENERAL](./api/)
 
 ## More Detailed Modular Device Information
 
