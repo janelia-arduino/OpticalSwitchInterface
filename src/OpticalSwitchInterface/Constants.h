@@ -7,10 +7,10 @@
 // ----------------------------------------------------------------------------
 #ifndef OPTICAL_SWITCH_INTERFACE_CONSTANTS_H
 #define OPTICAL_SWITCH_INTERFACE_CONSTANTS_H
-#include "ConstantVariable.h"
-#include "ModularServer.h"
+#include <ConstantVariable.h>
+#include <ModularServer.h>
 
-#include "EventController.h"
+#include <EventController.h>
 
 
 namespace optical_switch_interface

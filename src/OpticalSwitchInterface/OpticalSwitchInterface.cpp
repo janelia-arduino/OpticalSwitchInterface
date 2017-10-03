@@ -5,7 +5,7 @@
 // Authors:
 // Peter Polidoro polidorop@janelia.hhmi.org
 // ----------------------------------------------------------------------------
-#include "OpticalSwitchInterface.h"
+#include "../OpticalSwitchInterface.h"
 
 
 using namespace optical_switch_interface;
@@ -339,4 +339,3 @@ void OpticalSwitchInterface::output3Handler(modular_server::Interrupt * interrup
     digitalWrite(constants::output_pins[output_index],pin_value);
   }
 }
-
