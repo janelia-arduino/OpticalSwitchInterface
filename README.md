@@ -26,21 +26,23 @@ License:
 
 ```json
 {
-  "id":"getApi",
-  "result":{
-    "firmware":["OpticalSwitchInterface"],
-    "verbosity":"NAMES",
-    "functions":[
+  "id": "getApi",
+  "result": {
+    "firmware": [
+      "OpticalSwitchInterface"
+    ],
+    "verbosity": "NAMES",
+    "functions": [
       "enableAllOutputs",
       "disableAllOutputs",
       "outputsEnabled",
       "getSwitchInfo",
       "getOutputInfo"
     ],
-    "properties":[
+    "properties": [
       "inverted"
     ],
-    "callbacks":[
+    "callbacks": [
       "output0",
       "output1",
       "output2",
