@@ -15,6 +15,9 @@ void OpticalSwitchInterface::setup()
   // Parent Setup
   ModularDeviceBase::setup();
 
+  // Reset Watchdog
+  resetWatchdog();
+
   // Pin Setup
   pinMode(constants::enable_pin,OUTPUT);
   enableAllOutputs();
