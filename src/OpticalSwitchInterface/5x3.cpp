@@ -45,7 +45,7 @@ ConstantString * switch_pin_name_ptrs[PIN_COUNT_MAX] =
   &switch_3_pin_name,
 };
 
-const size_t switch_pins[PIN_COUNT_MAX] =
+const size_t switch_pin_numbers[PIN_COUNT_MAX] =
 {
   3,
   4,

@@ -39,7 +39,7 @@ void OpticalSwitchInterface::setup()
   for (size_t pin_index=0; pin_index<constants::PIN_COUNT_MAX; ++pin_index)
   {
     modular_server_.createPin(*constants::switch_pin_name_ptrs[pin_index],
-                              constants::switch_pins[pin_index]);
+                              constants::switch_pin_numbers[pin_index]);
   }
 
   // Add Firmware
@@ -78,19 +78,19 @@ void OpticalSwitchInterface::setup()
   // Callbacks
   modular_server::Callback & output_0_callback = modular_server_.createCallback(constants::output_0_callback_name);
   output_0_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&OpticalSwitchInterface::output0Handler));
-  output_0_callback.attachTo(*(constants::switch_pin_name_ptrs[0]),modular_server::pin::mode_change);
+  output_0_callback.attachTo(*(constants::switch_pin_name_ptrs[0]),modular_server::constants::pin_mode_interrupt_change);
 
   modular_server::Callback & output_1_callback = modular_server_.createCallback(constants::output_1_callback_name);
   output_1_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&OpticalSwitchInterface::output1Handler));
-  output_1_callback.attachTo(*(constants::switch_pin_name_ptrs[1]),modular_server::pin::mode_change);
+  output_1_callback.attachTo(*(constants::switch_pin_name_ptrs[1]),modular_server::constants::pin_mode_interrupt_change);
 
   modular_server::Callback & output_2_callback = modular_server_.createCallback(constants::output_2_callback_name);
   output_2_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&OpticalSwitchInterface::output2Handler));
-  output_2_callback.attachTo(*(constants::switch_pin_name_ptrs[2]),modular_server::pin::mode_change);
+  output_2_callback.attachTo(*(constants::switch_pin_name_ptrs[2]),modular_server::constants::pin_mode_interrupt_change);
 
   modular_server::Callback & output_3_callback = modular_server_.createCallback(constants::output_3_callback_name);
   output_3_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&OpticalSwitchInterface::output3Handler));
-  output_3_callback.attachTo(*(constants::switch_pin_name_ptrs[3]),modular_server::pin::mode_change);
+  output_3_callback.attachTo(*(constants::switch_pin_name_ptrs[3]),modular_server::constants::pin_mode_interrupt_change);
 
   for (size_t output_index=0; output_index<constants::OUTPUT_COUNT; ++output_index)
   {
@@ -120,7 +120,7 @@ int OpticalSwitchInterface::switchRead(const size_t switch_index)
 {
   if (switch_index < constants::PIN_COUNT_MAX)
   {
-    return digitalRead(constants::switch_pins[switch_index]);
+    return digitalRead(constants::switch_pin_numbers[switch_index]);
   }
   return LOW;
 }
@@ -179,7 +179,7 @@ void OpticalSwitchInterface::getSwitchInfoHandler()
     int state = switchRead(switch_index);
     modular_server_.response().beginObject();
 
-    // modular_server_.response().write(constants::pin_string,constants::switch_pins[switch_index]);
+    // modular_server_.response().write(constants::pin_string,constants::switch_pin_numbers[switch_index]);
 
     if (state == HIGH)
     {
@@ -257,7 +257,7 @@ void OpticalSwitchInterface::output0Handler(modular_server::Pin * pin_ptr)
     bool inverted;
     modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
 
-    int pin_value = digitalRead(pin_ptr->getPin());
+    int pin_value = pin_ptr->getValue();
 
     if (!inverted)
     {
@@ -281,7 +281,7 @@ void OpticalSwitchInterface::output1Handler(modular_server::Pin * pin_ptr)
     bool inverted;
     modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
 
-    int pin_value = digitalRead(pin_ptr->getPin());
+    int pin_value = pin_ptr->getValue();
 
     if (!inverted)
     {
@@ -305,7 +305,7 @@ void OpticalSwitchInterface::output2Handler(modular_server::Pin * pin_ptr)
     bool inverted;
     modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
 
-    int pin_value = digitalRead(pin_ptr->getPin());
+    int pin_value = pin_ptr->getValue();
 
     if (!inverted)
     {
@@ -329,7 +329,7 @@ void OpticalSwitchInterface::output3Handler(modular_server::Pin * pin_ptr)
     bool inverted;
     modular_server_.property(constants::inverted_property_name).getElementValue(output_index,inverted);
 
-    int pin_value = digitalRead(pin_ptr->getPin());
+    int pin_value = pin_ptr->getValue();
 
     if (!inverted)
     {

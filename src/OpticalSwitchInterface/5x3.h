@@ -30,7 +30,7 @@ extern ConstantString switch_2_pin_name;
 extern ConstantString switch_3_pin_name;
 extern ConstantString * switch_pin_name_ptrs[PIN_COUNT_MAX];
 
-extern const size_t switch_pins[PIN_COUNT_MAX];
+extern const size_t switch_pin_numbers[PIN_COUNT_MAX];
 
 // Units
 
