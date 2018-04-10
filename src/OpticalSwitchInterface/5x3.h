@@ -17,20 +17,20 @@ namespace optical_switch_interface
 namespace constants
 {
 //MAX values must be >= 1, >= created/copied count, < RAM limit
-enum{INTERRUPT_COUNT_MAX=4};
+enum{PIN_COUNT_MAX=4};
 
 enum {OUTPUT_COUNT=4};
 
 extern const size_t output_pins[OUTPUT_COUNT];
 
-// Interrupts
-extern ConstantString switch_0_interrupt_name;
-extern ConstantString switch_1_interrupt_name;
-extern ConstantString switch_2_interrupt_name;
-extern ConstantString switch_3_interrupt_name;
-extern ConstantString * switch_interrupt_name_ptrs[INTERRUPT_COUNT_MAX];
+// Pins
+extern ConstantString switch_0_pin_name;
+extern ConstantString switch_1_pin_name;
+extern ConstantString switch_2_pin_name;
+extern ConstantString switch_3_pin_name;
+extern ConstantString * switch_pin_name_ptrs[PIN_COUNT_MAX];
 
-extern const size_t switch_pins[INTERRUPT_COUNT_MAX];
+extern const size_t switch_pins[PIN_COUNT_MAX];
 
 // Units
 

@@ -33,7 +33,7 @@ public:
   int outputRead(const size_t output_index);
 
 private:
-  modular_server::Interrupt interrupts_[optical_switch_interface::constants::INTERRUPT_COUNT_MAX];
+  modular_server::Pin pins_[optical_switch_interface::constants::PIN_COUNT_MAX];
 
   modular_server::Property properties_[optical_switch_interface::constants::PROPERTY_COUNT_MAX];
   modular_server::Parameter parameters_[optical_switch_interface::constants::PARAMETER_COUNT_MAX];
@@ -49,10 +49,10 @@ private:
   void getSwitchInfoHandler();
   void getOutputInfoHandler();
   void invertedElementHandler(const size_t element_index);
-  void output0Handler(modular_server::Interrupt * interrupt_ptr);
-  void output1Handler(modular_server::Interrupt * interrupt_ptr);
-  void output2Handler(modular_server::Interrupt * interrupt_ptr);
-  void output3Handler(modular_server::Interrupt * interrupt_ptr);
+  void output0Handler(modular_server::Pin * pin_ptr);
+  void output1Handler(modular_server::Pin * pin_ptr);
+  void output2Handler(modular_server::Pin * pin_ptr);
+  void output3Handler(modular_server::Pin * pin_ptr);
 
 };
 

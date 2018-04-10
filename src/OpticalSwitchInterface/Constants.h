@@ -38,7 +38,7 @@ extern ConstantString state_string;
 extern ConstantString high_string;
 extern ConstantString low_string;
 
-// Interrupts
+// Pins
 
 // Units
 

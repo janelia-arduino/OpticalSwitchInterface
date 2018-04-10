@@ -17,12 +17,12 @@ CONSTANT_STRING(device_name,"optical_switch_interface");
 CONSTANT_STRING(firmware_name,"OpticalSwitchInterface");
 // Use semantic versioning http://semver.org/
 const modular_server::FirmwareInfo firmware_info =
-  {
-    .name_ptr=&firmware_name,
-    .version_major=1,
-    .version_minor=0,
-    .version_patch=3,
-  };
+{
+  .name_ptr=&firmware_name,
+  .version_major=1,
+  .version_minor=0,
+  .version_patch=3,
+};
 
 CONSTANT_STRING(hardware_name,"optical_switch_interface");
 
@@ -31,7 +31,7 @@ CONSTANT_STRING(state_string,"state");
 CONSTANT_STRING(high_string,"HIGH");
 CONSTANT_STRING(low_string,"LOW");
 
-// Interrupts
+// Pins
 
 // Units
 
