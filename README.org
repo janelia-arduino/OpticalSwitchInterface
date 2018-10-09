@@ -58,9 +58,9 @@
 
 * Devices
 
-  [[https://github.com/janelia-modular-devices/modular_device_base.git]]
+  [[https://github.com/janelia-modular-devices/modular_device_base]]
 
-  [[https://github.com/janelia-modular-devices/optical_switch_interface.git]]
+  [[https://github.com/janelia-modular-devices/optical_switch_interface]]
 
 * More Detailed Modular Device Information
 
