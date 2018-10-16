@@ -29,8 +29,8 @@ public:
   void disableAllOutputs();
   bool outputsEnabled();
 
-  int switchRead(const size_t switch_index);
-  int outputRead(const size_t output_index);
+  int switchRead(size_t switch_index);
+  int outputRead(size_t output_index);
 
 private:
   modular_server::Pin pins_[optical_switch_interface::constants::PIN_COUNT_MAX];
@@ -48,7 +48,7 @@ private:
   void outputsEnabledHandler();
   void getSwitchInfoHandler();
   void getOutputInfoHandler();
-  void invertedElementHandler(const size_t element_index);
+  void invertedElementHandler(size_t element_index);
   void output0Handler(modular_server::Pin * pin_ptr);
   void output1Handler(modular_server::Pin * pin_ptr);
   void output2Handler(modular_server::Pin * pin_ptr);

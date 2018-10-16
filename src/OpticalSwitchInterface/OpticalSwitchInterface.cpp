@@ -50,7 +50,7 @@ void OpticalSwitchInterface::setup()
     callbacks_);
   // Properties
   modular_server::Property & inverted_property = modular_server_.createProperty(constants::inverted_property_name,constants::inverted_default);
-  inverted_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<const size_t> *)0,*this,&OpticalSwitchInterface::invertedElementHandler));
+  inverted_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<size_t> *)0,*this,&OpticalSwitchInterface::invertedElementHandler));
 
   // Parameters
 
@@ -116,7 +116,7 @@ bool OpticalSwitchInterface::outputsEnabled()
   return enabled_;
 }
 
-int OpticalSwitchInterface::switchRead(const size_t switch_index)
+int OpticalSwitchInterface::switchRead(size_t switch_index)
 {
   if (switch_index < constants::PIN_COUNT_MAX)
   {
@@ -125,7 +125,7 @@ int OpticalSwitchInterface::switchRead(const size_t switch_index)
   return LOW;
 }
 
-int OpticalSwitchInterface::outputRead(const size_t output_index)
+int OpticalSwitchInterface::outputRead(size_t output_index)
 {
   if (output_index < constants::OUTPUT_COUNT)
   {
@@ -224,7 +224,7 @@ void OpticalSwitchInterface::getOutputInfoHandler()
   modular_server_.response().endArray();
 }
 
-void OpticalSwitchInterface::invertedElementHandler(const size_t element_index)
+void OpticalSwitchInterface::invertedElementHandler(size_t element_index)
 {
   if (element_index < constants::PIN_COUNT_MAX)
   {
