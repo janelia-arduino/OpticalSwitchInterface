@@ -20,7 +20,7 @@ void OpticalSwitchInterface::setup()
 
   // Pin Setup
   pinMode(constants::enable_pin,OUTPUT);
-  enableAllOutputs();
+  disableAllOutputs();
 
   for (size_t output_index=0; output_index<constants::OUTPUT_COUNT; ++output_index)
   {
