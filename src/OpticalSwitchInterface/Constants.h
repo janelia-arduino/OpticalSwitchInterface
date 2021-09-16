@@ -3,7 +3,7 @@
 //
 //
 // Authors:
-// Peter Polidoro peterpolidoro@gmail.com
+// Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
 #ifndef OPTICAL_SWITCH_INTERFACE_CONSTANTS_H
 #define OPTICAL_SWITCH_INTERFACE_CONSTANTS_H
